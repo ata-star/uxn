@@ -268,7 +268,6 @@ doctrl(Uxn *u, SDL_Event *event, int z)
 	} else
 		devctrl->dat[2] &= ~flag;
 }
-
 static void
 docolors(Device *d)
 {
@@ -483,8 +482,9 @@ run(Uxn *u)
 				if(event.type == stdin_event) {
 					devconsole->dat[0x2] = event.cbutton.button;
 					uxn_eval(u, mempeek16(devconsole->dat, 0));
-				} else if(event.type >= audio0_event && event.type < audio0_event + POLYPHONY)
+				} else if(event.type >= audio0_event && event.type < audio0_event + POLYPHONY) {
 					uxn_eval(u, mempeek16((devaudio0 + (event.type - audio0_event))->dat, 0));
+				}
 			}
 		}
 		uxn_eval(u, mempeek16(devscreen->dat, 0));
